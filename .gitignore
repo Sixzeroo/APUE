@@ -1,0 +1,344 @@
+*.a
+*.o
+advio/deadlock
+advio/mandatory
+advio/mcopy2
+advio/nonblockw
+advio/rot13a
+advio/rot13c2
+advio/rot13c2.c
+advio/xlate
+datafiles/strftime
+db/libapue_db.so
+db/libapue_db.so.1
+db/t4
+environ/doatexit
+environ/echoarg
+environ/getrlimit
+environ/hello1
+environ/testjmp
+exercises/bo
+exercises/fifo1
+exercises/getlogin
+exercises/getpw44bsd
+exercises/goodexit
+exercises/longpath
+exercises/pendlock
+exercises/prtime
+exercises/sizepipe
+exercises/vfork3
+exercises/zombie
+filedir/access
+filedir/cdpwd
+filedir/changemod
+filedir/devrdev
+filedir/filetype
+filedir/ftw8
+filedir/mycd
+filedir/umask
+filedir/unlink
+fileio/fileflags
+fileio/hole
+fileio/mycat
+fileio/seek
+intro/getcputc
+intro/hello
+intro/ls1
+intro/mycat
+intro/shell1
+intro/shell2
+intro/testerror
+intro/uidgid
+ipc1/add2
+ipc1/add2stdio
+ipc1/devzero
+ipc1/myuclc
+ipc1/pipe1
+ipc1/pipe2
+ipc1/pipe4
+ipc1/popen1
+ipc1/popen2
+ipc1/tshm
+ipc2/bindunix
+ipc2/open.fe/openclient
+ipc2/open/openclient
+ipc2/opend.fe/opend
+ipc2/opend/opend.poll
+ipc2/opend/opend.select
+ipc2/pollmsg
+ipc2/sendmsg
+lib/ptyopen.c
+printer/print
+printer/printd
+proc/echoall
+proc/exec1
+proc/exec2
+proc/fork1
+proc/fork2
+proc/nice
+proc/pracct
+proc/pruids
+proc/systest1
+proc/systest3
+proc/tellwait1
+proc/tellwait2
+proc/test1
+proc/times1
+proc/vfork1
+proc/wait1
+pty/pty
+relation/orphan3
+signals/critical
+signals/mask
+signals/read1
+signals/read2
+signals/reenter
+signals/sigtstp
+signals/sigusr
+signals/suspend1
+signals/suspend2
+signals/systest2
+signals/tsleep2
+sockets/findsvc
+sockets/ruptime
+sockets/ruptime-dg
+sockets/ruptimed
+sockets/ruptimed-dg
+sockets/ruptimed-fd
+standards/conf
+standards/conf.c
+standards/options
+standards/options.c
+standards/pathconf.sym
+standards/pathopt.sym
+standards/sysconf.sym
+standards/sysopt.sym
+stdio/buf
+stdio/fgetsfputs
+stdio/getcharbug
+stdio/getcputc
+stdio/mkstemp
+stdio/tempfiles
+termios/csize
+termios/settty
+termios/t_getpass
+termios/t_isatty
+termios/t_raw
+termios/t_ttyname
+termios/winch
+threadctl/atfork
+threadctl/suspend
+threads/badexit2
+threads/cleanup
+threads/exitstatus
+threads/threadid
+
+# Created by https://www.gitignore.io/api/macOS
+
+### macOS ###
+*.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# End of https://www.gitignore.io/api/macOS
+
+# Created by https://www.gitignore.io/api/Linux
+
+### Linux ###
+*~
+
+# temporary files which can be created if a process still has a handle open of a deleted file
+.fuse_hidden*
+
+# KDE directory preferences
+.directory
+
+# Linux trash folder which might appear on any partition or disk
+.Trash-*
+
+# .nfs files are created when an open file is removed but is still being accessed
+.nfs*
+
+# End of https://www.gitignore.io/api/Linux
+
+# Created by https://www.gitignore.io/api/Python
+
+### Python ###
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# celery beat schedule file
+celerybeat-schedule
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+
+# End of https://www.gitignore.io/api/Python
+
+# Created by https://www.gitignore.io/api/Windows
+
+### Windows ###
+# Windows thumbnail cache files
+Thumbs.db
+ehthumbs.db
+ehthumbs_vista.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+# End of https://www.gitignore.io/api/Windows
+
+# Created by https://www.gitignore.io/api/Java
+
+### Java ###
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# End of https://www.gitignore.io/api/Java
