@@ -9,9 +9,11 @@ main(int argc, char *argv[])
 	if (argc != 2)
 		err_quit("usage: a.out <descriptor#>");
 
-	if ((val = fcntl(atoi(argv[1]), F_GETFL, 0)) < 0)
+	// 获取给定文件描述符的文件状态标志
+	if((val = fcntl(atoi(argv[1]), F_GETFL, 0)) < 0)
 		err_sys("fcntl error for fd %d", atoi(argv[1]));
 
+	// 用屏蔽字获取方式位
 	switch (val & O_ACCMODE) {
 	case O_RDONLY:
 		printf("read only");
