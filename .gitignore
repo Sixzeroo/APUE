@@ -1,5 +1,9 @@
+.idea/
+CMakeLists.txt
+cmake-build-debug/
 *.a
 *.o
+!/lib/libapue.a
 advio/deadlock
 advio/mandatory
 advio/mcopy2

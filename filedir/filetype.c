@@ -9,10 +9,14 @@ main(int argc, char *argv[])
 
 	for (i = 1; i < argc; i++) {
 		printf("%s: ", argv[i]);
+
+		// 获取每一个文件的详细信息，使用lstat以便检测符号链接
 		if (lstat(argv[i], &buf) < 0) {
 			err_ret("lstat error");
 			continue;
 		}
+
+		// 使用宏定义来确定文件类型
 		if (S_ISREG(buf.st_mode))
 			ptr = "regular";
 		else if (S_ISDIR(buf.st_mode))
