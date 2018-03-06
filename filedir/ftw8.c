@@ -19,8 +19,10 @@ main(int argc, char *argv[])
 	if (argc != 2)
 		err_quit("usage:  ftw  <starting-pathname>");
 
+	// 执行统计程序
 	ret = myftw(argv[1], myfunc);		/* does it all */
 
+	// 输出统计结果
 	ntot = nreg + ndir + nblk + nchr + nfifo + nslink + nsock;
 	if (ntot == 0)
 		ntot = 1;		/* avoid divide by 0; print 0 for all counts */
@@ -120,6 +122,7 @@ dopath(Myfunc* func)
 	return(ret);
 }
 
+// 判断是哪种类型的文件
 static int
 myfunc(const char *pathname, const struct stat *statptr, int type)
 {

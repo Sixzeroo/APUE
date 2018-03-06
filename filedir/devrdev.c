@@ -11,11 +11,13 @@ main(int argc, char *argv[])
 
 	for (i = 1; i < argc; i++) {
 		printf("%s: ", argv[i]);
+		// 获取文件信息
 		if (stat(argv[i], &buf) < 0) {
 			err_ret("stat error");
 			continue;
 		}
 
+		// 使用两个宏major、minor来访问主次设备号
 		printf("dev = %d/%d", major(buf.st_dev),  minor(buf.st_dev));
 
 		if (S_ISCHR(buf.st_mode) || S_ISBLK(buf.st_mode)) {
