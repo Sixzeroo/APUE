@@ -16,21 +16,25 @@ main()
 	exit(0);
 }
 
+// 测试给定字符串创建的临时文件
 void
 make_temp(char *template)
 {
 	int			fd;
 	struct stat	sbuf;
 
+	// 创建文件
 	if ((fd = mkstemp(template)) < 0)
 		err_sys("can't create temp file");
 	printf("temp name = %s\n", template);
 	close(fd);
+	// 未成功
 	if (stat(template, &sbuf) < 0) {
 		if (errno == ENOENT)
 			printf("file doesn't exist\n");
 		else
 			err_sys("stat failed");
+		// 成功
 	} else {
 		printf("file exists\n");
 		unlink(template);

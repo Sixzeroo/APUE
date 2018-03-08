@@ -27,6 +27,7 @@ main(void)
 	exit(0);
 }
 
+// 打印缓冲信息
 void
 pr_stdio(const char *name, FILE *fp)
 {
@@ -40,24 +41,28 @@ pr_stdio(const char *name, FILE *fp)
 	printf(", buffer size = %d\n", buffer_size(fp));
 }
 
+// 使用#if判断在4种平台下实现
 /*
  * The following is nonportable.
  */
 
 #if defined(_IO_UNBUFFERED)
 
+// 判断不是行缓冲
 int
 is_unbuffered(FILE *fp)
 {
 	return(fp->_flags & _IO_UNBUFFERED);
 }
 
+// 判断是行缓冲
 int
 is_linebuffered(FILE *fp)
 {
 	return(fp->_flags & _IO_LINE_BUF);
 }
 
+// 打印缓冲大小
 int
 buffer_size(FILE *fp)
 {

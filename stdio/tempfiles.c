@@ -6,11 +6,14 @@ main(void)
 	char	name[L_tmpnam], line[MAXLINE];
 	FILE	*fp;
 
+	// 传入参数为NULL产生的temp name
 	printf("%s\n", tmpnam(NULL));		/* first temp name */
 
+	// 给定参数时产生的temp name
 	tmpnam(name);						/* second temp name */
 	printf("%s\n", name);
 
+	// 创建临时二进制文件
 	if ((fp = tmpfile()) == NULL)		/* create temp file */
 		err_sys("tmpfile error");
 	fputs("one line of output\n", fp);	/* write to temp file */
