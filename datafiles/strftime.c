@@ -10,8 +10,11 @@ main(void)
 	char buf1[16];
 	char buf2[64];
 
+	// 获取当前时间和日期，日历时间
 	time(&t);
+	// 将日历时间装换为本地时间
 	tmp = localtime(&t);
+	// 按格式输出
 	if (strftime(buf1, 16, "time and date: %r, %a %b %d, %Y", tmp) == 0)
 		printf("buffer length 16 is too small\n");
 	else
