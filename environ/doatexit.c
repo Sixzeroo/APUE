@@ -6,9 +6,11 @@ static void	my_exit2(void);
 int
 main(void)
 {
+	// 登记使用my_exit2终止处理程序
 	if (atexit(my_exit2) != 0)
 		err_sys("can't register my_exit2");
 
+	// 登记使用my_exit1终止处理程序
 	if (atexit(my_exit1) != 0)
 		err_sys("can't register my_exit1");
 	if (atexit(my_exit1) != 0)

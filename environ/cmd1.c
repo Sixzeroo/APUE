@@ -11,6 +11,7 @@ main(void)
 {
 	char	line[MAXLINE];
 
+	// 从IO中获取一行
 	while (fgets(line, MAXLINE, stdin) != NULL)
 		do_line(line);
 	exit(0);
@@ -24,6 +25,7 @@ do_line(char *ptr)		/* process one line of input */
 	int		cmd;
 
 	tok_ptr = ptr;
+	// 读取命令
 	while ((cmd = get_token()) > 0) {
 		switch (cmd) {	/* one case for each command */
 		case TOK_ADD:
