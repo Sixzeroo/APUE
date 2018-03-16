@@ -23,6 +23,7 @@ charatatime(char *str)
 	char	*ptr;
 	int		c;
 
+	// 不带缓冲输出
 	setbuf(stdout, NULL);			/* set unbuffered */
 	for (ptr = str; (c = *ptr++) != 0; )
 		putc(c, stdout);

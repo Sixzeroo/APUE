@@ -10,10 +10,12 @@ main(void)
 	pid_t	pid;
 
 	var = 88;
+	// 向文件输出一个字符串
 	if (write(STDOUT_FILENO, buf, sizeof(buf)-1) != sizeof(buf)-1)
 		err_sys("write error");
 	printf("before fork\n");	/* we don't flush stdout */
 
+	// fork一个子进程
 	if ((pid = fork()) < 0) {
 		err_sys("fork error");
 	} else if (pid == 0) {		/* child */
@@ -23,6 +25,7 @@ main(void)
 		sleep(2);				/* parent */
 	}
 
+	// 子进程中变量的改变不对父进程产生影响
 	printf("pid = %ld, glob = %d, var = %d\n", (long)getpid(), globvar,
 	  var);
 	exit(0);

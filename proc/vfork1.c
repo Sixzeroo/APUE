@@ -10,6 +10,7 @@ main(void)
 
 	var = 88;
 	printf("before vfork\n");	/* we don't flush stdio */
+	// 创建一个全新进程
 	if ((pid = vfork()) < 0) {
 		err_sys("vfork error");
 	} else if (pid == 0) {		/* child */
@@ -19,6 +20,7 @@ main(void)
 	}
 
 	/* parent continues here */
+	// 子进程一定先于父进行运行
 	printf("pid = %ld, glob = %d, var = %d\n", (long)getpid(), globvar,
 	  var);
 	exit(0);

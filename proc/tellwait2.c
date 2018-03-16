@@ -12,10 +12,12 @@ main(void)
 	if ((pid = fork()) < 0) {
 		err_sys("fork error");
 	} else if (pid == 0) {
+		// 等待父进程运行
 		WAIT_PARENT();		/* parent goes first */
 		charatatime("output from child\n");
 	} else {
 		charatatime("output from parent\n");
+		// 告诉子进程运行完
 		TELL_CHILD(pid);
 	}
 	exit(0);

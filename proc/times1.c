@@ -4,6 +4,8 @@
 static void	pr_times(clock_t, struct tms *, struct tms *);
 static void	do_cmd(char *);
 
+// 对命令执行情况进行计时
+
 int
 main(int argc, char *argv[])
 {
@@ -33,6 +35,7 @@ do_cmd(char *cmd)		/* execute and time the "cmd" */
 	if ((end = times(&tmsend)) == -1)		/* ending values */
 		err_sys("times error");
 
+	// 打印时间
 	pr_times(end-start, &tmsstart, &tmsend);
 	pr_exit(status);
 }

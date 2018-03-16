@@ -4,6 +4,7 @@ int
 main(void)
 {
 	pid_t	pid;
+	// 产生会计数据的程序
 
 	if ((pid = fork()) < 0)
 		err_sys("fork error");
