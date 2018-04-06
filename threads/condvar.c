@@ -1,5 +1,7 @@
 #include <pthread.h>
 
+// 使用条件变量和互斥量对线程进行同步
+
 struct msg {
 	struct msg *m_next;
 	/* ... more stuff here ... */
@@ -17,7 +19,9 @@ process_msg(void)
 	struct msg *mp;
 
 	for (;;) {
+		// 互斥量加锁
 		pthread_mutex_lock(&qlock);
+		// 条件是工作队列的状态，使用互斥量进行保护
 		while (workq == NULL)
 			pthread_cond_wait(&qready, &qlock);
 		mp = workq;

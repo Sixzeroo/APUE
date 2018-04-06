@@ -7,6 +7,8 @@
 #define NUMNUM 8000000L			/* number of numbers to sort */
 #define TNUM   (NUMNUM/NTHR)	/* number to sort per thread */
 
+// 使用屏障进行线程同步，用8个线程分解800万个数的排序工作
+
 long nums[NUMNUM];
 long snums[NUMNUM];
 
@@ -22,6 +24,7 @@ extern int heapsort(void *, size_t, size_t,
 /*
  * Compare two long integers (helper function for heapsort)
  */
+// 堆排序使用的比较函数
 int
 complong(const void *arg1, const void *arg2)
 {
@@ -44,7 +47,9 @@ thr_fn(void *arg)
 {
 	long	idx = (long)arg;
 
+	// 进行堆排序
 	heapsort(&nums[idx], TNUM, sizeof(long), complong);
+	// 等待其他进程
 	pthread_barrier_wait(&b);
 
 	/*
@@ -53,6 +58,7 @@ thr_fn(void *arg)
 	return((void *)0);
 }
 
+// 每个线程所执行的合并函数
 /*
  * Merge the results of the individual sorted ranges.
  */
@@ -98,12 +104,15 @@ main()
 	 * Create 8 threads to sort the numbers.
 	 */
 	gettimeofday(&start, NULL);
+	// 屏障初始化，设定线程数位NTHR+1
 	pthread_barrier_init(&b, NULL, NTHR+1);
 	for (i = 0; i < NTHR; i++) {
+		// 依次创建线程
 		err = pthread_create(&tid, NULL, thr_fn, (void *)(i * TNUM));
 		if (err != 0)
 			err_exit(err, "can't create thread");
 	}
+	// 屏障等待
 	pthread_barrier_wait(&b);
 	merge();
 	gettimeofday(&end, NULL);

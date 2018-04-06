@@ -1,6 +1,9 @@
 #include <stdlib.h>
 #include <pthread.h>
 
+// 使用读写锁
+
+// 作业数据结构
 struct job {
 	struct job *j_next;
 	struct job *j_prev;
@@ -8,6 +11,7 @@ struct job {
 	/* ... more stuff here ... */
 };
 
+// 作业队列
 struct queue {
 	struct job      *q_head;
 	struct job      *q_tail;
@@ -17,6 +21,7 @@ struct queue {
 /*
  * Initialize a queue.
  */
+// 作业初始化
 int
 queue_init(struct queue *qp)
 {
@@ -24,6 +29,7 @@ queue_init(struct queue *qp)
 
 	qp->q_head = NULL;
 	qp->q_tail = NULL;
+	// 读写锁初始哈
 	err = pthread_rwlock_init(&qp->q_lock, NULL);
 	if (err != 0)
 		return(err);
@@ -34,9 +40,11 @@ queue_init(struct queue *qp)
 /*
  * Insert a job at the head of the queue.
  */
+// 添加作业
 void
 job_insert(struct queue *qp, struct job *jp)
 {
+	// 加写锁
 	pthread_rwlock_wrlock(&qp->q_lock);
 	jp->j_next = qp->q_head;
 	jp->j_prev = NULL;
@@ -45,12 +53,14 @@ job_insert(struct queue *qp, struct job *jp)
 	else
 		qp->q_tail = jp;	/* list was empty */
 	qp->q_head = jp;
+	// 解除写锁
 	pthread_rwlock_unlock(&qp->q_lock);
 }
 
 /*
  * Append a job on the tail of the queue.
  */
+// 队列最后添加作业
 void
 job_append(struct queue *qp, struct job *jp)
 {
@@ -68,9 +78,11 @@ job_append(struct queue *qp, struct job *jp)
 /*
  * Remove the given job from a queue.
  */
+// 从队列中移除作业
 void
 job_remove(struct queue *qp, struct job *jp)
 {
+	// 加写锁
 	pthread_rwlock_wrlock(&qp->q_lock);
 	if (jp == qp->q_head) {
 		qp->q_head = jp->j_next;
@@ -85,24 +97,29 @@ job_remove(struct queue *qp, struct job *jp)
 		jp->j_prev->j_next = jp->j_next;
 		jp->j_next->j_prev = jp->j_prev;
 	}
+	// 解除写锁
 	pthread_rwlock_unlock(&qp->q_lock);
 }
 
 /*
  * Find a job for the given thread ID.
  */
+// 寻找作业
 struct job *
 job_find(struct queue *qp, pthread_t id)
 {
 	struct job *jp;
 
+	// 加读锁
 	if (pthread_rwlock_rdlock(&qp->q_lock) != 0)
 		return(NULL);
 
+	// 通过线程ID找到指定作业
 	for (jp = qp->q_head; jp != NULL; jp = jp->j_next)
 		if (pthread_equal(jp->j_id, id))
 			break;
 
+	// 解除读锁
 	pthread_rwlock_unlock(&qp->q_lock);
 	return(jp);
 }

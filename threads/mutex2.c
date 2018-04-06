@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <pthread.h>
 
+// 使用两个互斥量 避免死锁
+
 #define NHASH 29
 #define HASH(id) (((unsigned long)id)%NHASH)
 
@@ -30,17 +32,22 @@ foo_alloc(int id) /* allocate the object */
 			return(NULL);
 		}
 		idx = HASH(id);
+		// 先锁住散列列表锁，把新的结构加到散列桶里面
 		pthread_mutex_lock(&hashlock);
 		fp->f_next = fh[idx];
 		fh[idx] = fp;
+		// 锁定新结构的互斥量
 		pthread_mutex_lock(&fp->f_lock);
 		pthread_mutex_unlock(&hashlock);
+		// 新结构进行其他的初始化操作
 		/* ... continue initialization ... */
+		// 初始化完毕之后新结构进行解锁
 		pthread_mutex_unlock(&fp->f_lock);
 	}
 	return(fp);
 }
 
+// 引用计数增加
 void
 foo_hold(struct foo *fp) /* add a reference to the object */
 {
@@ -49,22 +56,27 @@ foo_hold(struct foo *fp) /* add a reference to the object */
 	pthread_mutex_unlock(&fp->f_lock);
 }
 
+// 在散列表中找到指定结构
 struct foo *
 foo_find(int id) /* find an existing object */
 {
 	struct foo	*fp;
 
+	// 先将散列表锁起来
 	pthread_mutex_lock(&hashlock);
+	// 找到指定id结构
 	for (fp = fh[HASH(id)]; fp != NULL; fp = fp->f_next) {
 		if (fp->f_id == id) {
 			foo_hold(fp);
 			break;
 		}
 	}
+	// 散列表解锁
 	pthread_mutex_unlock(&hashlock);
 	return(fp);
 }
 
+// 释放资源
 void
 foo_rele(struct foo *fp) /* release a reference to the object */
 {
@@ -72,8 +84,10 @@ foo_rele(struct foo *fp) /* release a reference to the object */
 	int			idx;
 
 	pthread_mutex_lock(&fp->f_lock);
+	// 最后一个引用
 	if (fp->f_count == 1) { /* last reference */
 		pthread_mutex_unlock(&fp->f_lock);
+		// 重新检查条件，判断是否需要释放这个结构
 		pthread_mutex_lock(&hashlock);
 		pthread_mutex_lock(&fp->f_lock);
 		/* need to recheck the condition */
@@ -84,6 +98,7 @@ foo_rele(struct foo *fp) /* release a reference to the object */
 			return;
 		}
 		/* remove from list */
+		// 从散列表中删除这个结构
 		idx = HASH(fp->f_id);
 		tfp = fh[idx];
 		if (tfp == fp) {

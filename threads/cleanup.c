@@ -1,6 +1,8 @@
 #include "apue.h"
 #include <pthread.h>
 
+// 使用线程清理处理程序
+
 void
 cleanup(void *arg)
 {
@@ -11,6 +13,7 @@ void *
 thr_fn1(void *arg)
 {
 	printf("thread 1 start\n");
+	// 加入清理处理程序
 	pthread_cleanup_push(cleanup, "thread 1 first handler");
 	pthread_cleanup_push(cleanup, "thread 1 second handler");
 	printf("thread 1 push complete\n");
@@ -25,6 +28,7 @@ void *
 thr_fn2(void *arg)
 {
 	printf("thread 2 start\n");
+	// 加入清理处理程序
 	pthread_cleanup_push(cleanup, "thread 2 first handler");
 	pthread_cleanup_push(cleanup, "thread 2 second handler");
 	printf("thread 2 push complete\n");
