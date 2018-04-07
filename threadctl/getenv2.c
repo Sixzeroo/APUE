@@ -3,6 +3,8 @@
 #include <pthread.h>
 #include <stdlib.h>
 
+// getenv 的可重入版本
+
 extern char **environ;
 
 pthread_mutex_t env_mutex;
@@ -25,8 +27,10 @@ getenv_r(const char *name, char *buf, int buflen)
 {
 	int i, len, olen;
 
+	// 使用pthread_once 确保每个进程只调用thread_init一次
 	pthread_once(&init_done, thread_init);
 	len = strlen(name);
+	// 互斥量加锁
 	pthread_mutex_lock(&env_mutex);
 	for (i = 0; environ[i] != NULL; i++) {
 		if ((strncmp(name, environ[i], len) == 0) &&

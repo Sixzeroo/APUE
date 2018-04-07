@@ -3,6 +3,8 @@
 #include <time.h>
 #include <sys/time.h>
 
+// 有必要使用递归互斥量的一种情况
+
 extern int makethread(void *(*)(void *), void *);
 
 struct to_info {
@@ -21,6 +23,7 @@ struct to_info {
 #define CLOCK_REALTIME 0
 #define USECTONSEC 1000		/* microseconds to nanoseconds */
 
+// 获取时间
 void
 clock_gettime(int id, struct timespec *tsp)
 {
