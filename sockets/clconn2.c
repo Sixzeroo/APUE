@@ -3,6 +3,8 @@
 
 #define MAXSLEEP 128
 
+// 可迁移的支持重试的连接代码
+
 int
 connect_retry(int domain, int type, int protocol,
               const struct sockaddr *addr, socklen_t alen)
@@ -13,8 +15,10 @@ connect_retry(int domain, int type, int protocol,
 	 * Try to connect with exponential backoff.
 	 */
 	for (numsec = 1; numsec <= MAXSLEEP; numsec <<= 1) {
+		// 创建socket
 		if ((fd = socket(domain, type, protocol)) < 0)
 			return(-1);
+		// 连接
 		if (connect(fd, addr, alen) == 0) {
 			/*
 			 * Connection accepted.

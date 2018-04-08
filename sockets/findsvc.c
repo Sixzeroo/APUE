@@ -9,6 +9,9 @@
 #include <netinet/in.h>
 #endif
 
+// getaddrinfo 使用方法
+
+// 打印使用的域
 void
 print_family(struct addrinfo *aip)
 {
@@ -31,6 +34,7 @@ print_family(struct addrinfo *aip)
 	}
 }
 
+// 打印网络类型
 void
 print_type(struct addrinfo *aip)
 {
@@ -53,6 +57,7 @@ print_type(struct addrinfo *aip)
 	}
 }
 
+// 打印网络协议
 void
 print_protocol(struct addrinfo *aip)
 {
@@ -75,6 +80,7 @@ print_protocol(struct addrinfo *aip)
 	}
 }
 
+// 打印网络标志
 void
 print_flags(struct addrinfo *aip)
 {
@@ -101,6 +107,7 @@ int
 main(int argc, char *argv[])
 {
 	struct addrinfo		*ailist, *aip;
+	// 创建addrindfo 数据结构
 	struct addrinfo		hint;
 	struct sockaddr_in	*sinp;
 	const char 			*addr;
@@ -117,6 +124,7 @@ main(int argc, char *argv[])
 	hint.ai_canonname = NULL;
 	hint.ai_addr = NULL;
 	hint.ai_next = NULL;
+	// 参数中给定socket
 	if ((err = getaddrinfo(argv[1], argv[2], &hint, &ailist)) != 0)
 		err_quit("getaddrinfo error: %s", gai_strerror(err));
 	for (aip = ailist; aip != NULL; aip = aip->ai_next) {

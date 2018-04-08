@@ -12,6 +12,8 @@
 #define HOST_NAME_MAX 256
 #endif
 
+// 提供系统正常运行时间的服务器程序
+
 extern int initserver(int, const struct sockaddr *, socklen_t, int);
 
 void
