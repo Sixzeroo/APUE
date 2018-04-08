@@ -3,6 +3,8 @@
 #include <fcntl.h>
 #include <sys/resource.h>
 
+// 初始化一个守护进程
+
 void
 daemonize(const char *cmd)
 {
@@ -14,6 +16,7 @@ daemonize(const char *cmd)
 	/*
 	 * Clear file creation mask.
 	 */
+	// 清空文件创建标志
 	umask(0);
 
 	/*
@@ -27,8 +30,10 @@ daemonize(const char *cmd)
 	 */
 	if ((pid = fork()) < 0)
 		err_quit("%s: can't fork", cmd);
+	// 父进程退出
 	else if (pid != 0) /* parent */
 		exit(0);
+	// 创建新会话
 	setsid();
 
 	/*
@@ -48,6 +53,7 @@ daemonize(const char *cmd)
 	 * Change the current working directory to the root so
 	 * we won't prevent file systems from being unmounted.
 	 */
+	// 更改工作目录到根目录
 	if (chdir("/") < 0)
 		err_quit("%s: can't change directory to /", cmd);
 
@@ -62,6 +68,7 @@ daemonize(const char *cmd)
 	/*
 	 * Attach file descriptors 0, 1, and 2 to /dev/null.
 	 */
+	// 把0，1，2这些文件描述符绑定到/dev/null
 	fd0 = open("/dev/null", O_RDWR);
 	fd1 = dup(0);
 	fd2 = dup(0);

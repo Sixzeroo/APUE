@@ -2,6 +2,8 @@
 #include <syslog.h>
 #include <errno.h>
 
+// 单线程守护进程捕捉SIGHUP并重读其配置文件
+
 extern int lockfile(int);
 extern int already_running(void);
 

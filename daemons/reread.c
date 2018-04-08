@@ -2,8 +2,11 @@
 #include <pthread.h>
 #include <syslog.h>
 
+// 守护进程重读配置文件
+
 sigset_t	mask;
 
+// 确保守护进程只有一个副本在运行
 extern int already_running(void);
 
 void
