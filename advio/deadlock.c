@@ -1,6 +1,9 @@
 #include "apue.h"
 #include <fcntl.h>
 
+// 死锁检测实例
+
+// 字节加锁
 static void
 lockabyte(const char *name, int fd, off_t offset)
 {
@@ -27,11 +30,13 @@ main(void)
 	if ((pid = fork()) < 0) {
 		err_sys("fork error");
 	} else if (pid == 0) {			/* child */
+		// 子进程先获得0字节的锁，再要求1字节的锁
 		lockabyte("child", fd, 0);
 		TELL_PARENT(getppid());
 		WAIT_PARENT();
 		lockabyte("child", fd, 1);
 	} else {						/* parent */
+		// 父进程先获得1字节的锁，再要求0字节的锁
 		lockabyte("parent", fd, 1);
 		TELL_CHILD(pid);
 		WAIT_CHILD();
